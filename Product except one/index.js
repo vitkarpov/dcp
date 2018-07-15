@@ -2,6 +2,10 @@ const assert = require('assert');
 
 // O(n) time and O(1) space
 function solution(arr) {
+    if (arr.length === 1) {
+        return arr;
+    }
+
     const product = arr.reduce((product, item) => {
         return product *= item;
     }, 1);
@@ -10,22 +14,27 @@ function solution(arr) {
 }
 
 /**
- * If I can't use division then the only way I see is O(N^2) so far :-(
+ * Without divison: O(n) time and O(n) space
  */
 function solution2(arr) {
-    const n = arr.length;
-    const result = [];
+    if (arr.length === 1) {
+        return arr;
+    }
 
-    for (let i = 0; i < n; i++) {
-        let product = 1;
+    const left = initCompl(arr);
+    const right = initCompl(arr.reverse());
 
-        for (let j = 0; j < n; j++) {
-            if (i !== j) {
-                product *= arr[j];
-            }
-        }
+    return arr.map((item, index) => {
+        return left[index] * right[right.length - 1 - index];
+    });
+}
 
-        result.push(product);
+function initCompl(arr) {
+    const result = [1];
+
+    for (let i = 0; i < arr.length - 1; i++) {
+        const prev = result[result.length - 1];
+        result.push(prev * arr[i]);
     }
 
     return result;
@@ -33,9 +42,13 @@ function solution2(arr) {
 
 assertArrays(solution([1, 2, 3, 4, 5]), [120, 60, 40, 30, 24]);
 assertArrays(solution([3, 2, 1]), [2, 3, 6]);
+assertArrays(solution([2, 2]), [2, 2]);
+assertArrays(solution([10]), [10]);
 
 assertArrays(solution2([1, 2, 3, 4, 5]), [120, 60, 40, 30, 24]);
 assertArrays(solution2([3, 2, 1]), [2, 3, 6]);
+assertArrays(solution2([2, 2]), [2, 2]);
+assertArrays(solution2([10]), [10]);
 
 function assertArrays(actual, expected) {
     actual.forEach((item, i) => {
