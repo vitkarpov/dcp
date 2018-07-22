@@ -12,29 +12,54 @@ class Node {
 
 function getNumberOfUnivalSubTrees(root) {
     if (root === null) {
-        return 0;
-    }
-    if (root.left === null && root.right === null) {
-        return 1;
+        return [0, true];
     }
 
-    const result = root.left.value === root.right.value ? 1 : 0;
+    const [leftCount, isLeftUniversal] = getNumberOfUnivalSubTrees(root.left);
+    const [rightCount, isRightUniversal] = getNumberOfUnivalSubTrees(root.right);
+    const totalCount = leftCount + rightCount;
 
-    return result + getNumberOfUnivalSubTrees(root.left) + getNumberOfUnivalSubTrees(root.right);
+    if (isLeftUniversal && isRightUniversal) {
+        if (root.left && root.value !== root.left.value) {
+            return [totalCount, false];
+        }
+        if (root.right && root.value !== root.right.value) {
+            return [totalCount, false];
+        }
+        return [totalCount + 1, true];
+    }
+    return [totalCount, false];
 }
 
 function TestAll() {
-    const root = new Node(0,
-        new Node(1, null, null),
-        new Node(0,
-            new Node(1,
-                new Node(1, null, null),
-                new Node(1, null, null)
-            ),
-            new Node(0, null, null)
+    {
+        const root = new Node(0,
+            new Node(1, null, null),
+            new Node(0,
+                new Node(1,
+                    new Node(1, null, null),
+                    new Node(1, null, null)
+                ),
+                new Node(0, null, null)
+            )
         )
-    )
-    assert(getNumberOfUnivalSubTrees(root) === 5);
+        const [result] = getNumberOfUnivalSubTrees(root);
+        assert(result === 5);
+    }
+    {
+        const root = new Node(0,
+            new Node(1, null, null),
+            new Node(0,
+                new Node(1,
+                    new Node(0, null, null),
+                    new Node(1, null, null)
+                ),
+                new Node(0, null, null)
+            )
+        )
+        const [result] = getNumberOfUnivalSubTrees(root);
+        assert(result === 4);
+    }
 }
 
 TestAll();
