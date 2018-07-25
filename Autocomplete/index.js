@@ -20,16 +20,19 @@ class AutoComplete {
 
     addWord(item) {
         let current = this.root;
+        let next;
 
-        item.split('').forEach((symbol) => {
-            let next = current.children.find((node) => node.value === symbol);
+        for (let i = 0; i < item.length; i++) {
+            const symbol = item[i];
+            next = current.children.find((node) => node.value === symbol);
 
             if (!next) {
                 next = new Node(symbol);
                 current.children.push(next);
             }
             current = next;
-        });
+        }
+
         current.wordEnd = true;
         current.word = item;
 
@@ -37,20 +40,15 @@ class AutoComplete {
     }
 
     find(prefix) {
-        let current = this.root;
+        return this._findAllWordsFromNode(this._getPrefixNode(prefix));
+    }
 
-        prefix.split('').forEach((symbol) => {
-            if (!current) {
-                return;
-            }
-            current = current.children.find((node) => node.value === symbol);
-        });
-
-        if (!current) {
+    _findAllWordsFromNode(node) {
+        if (!node) {
             return [];
         }
 
-        const queue = [current];
+        const queue = [node];
         const words = [];
 
         while (queue.length > 0) {
@@ -66,6 +64,21 @@ class AutoComplete {
         }
 
         return words;
+    }
+
+    _getPrefixNode(prefix) {
+        let current = this.root;
+
+        for (let i = 0; i < prefix.length; i++) {
+            const symbol = prefix[i];
+
+            current = current.children.find((node) => node.value === symbol);
+
+            if (!current) {
+                return null;
+            }
+        }
+        return current;
     }
 }
 
