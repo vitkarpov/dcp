@@ -1,9 +1,5 @@
 'use strict';
 
-const assert = require('assert');
-
-assert(getNumberOfWays(4, [1, 2]) === 5);
-
 function getNumberOfWays(n, steps) {
     const dp = steps.reduce((dp, step) => {
         dp[step] = 1;
