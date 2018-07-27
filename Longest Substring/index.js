@@ -10,7 +10,7 @@ function getLenOfLongestSubstr(s, k) {
     let j = 0;
     const store = initStore(s);
 
-    while (i <= j && j < s.length) {
+    while (j < s.length) {
         if (diff <= k) {
             if (store[s[j]] === 0) {
                 diff++;
