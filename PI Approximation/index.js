@@ -1,7 +1,8 @@
 /**
  * The key idea here is that you can uniformly distribute points
  * on the 1x1 square area and then count how many points ended up
- * inside and outside the inscribed circle (but inside the square).
+ * inside the inscribed circle.
+ * The ratio of the inside-count and the total-sample-count approximates PI/4.
  * As soos as points are well distributed the approximation should be accurate.
  */
 
