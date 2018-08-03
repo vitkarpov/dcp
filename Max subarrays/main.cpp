@@ -2,7 +2,6 @@
 #include <vector>
 #include <queue>
 #include <deque>
-#include <cassert>
 
 using namespace std;
 
