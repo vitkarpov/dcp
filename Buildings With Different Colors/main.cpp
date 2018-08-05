@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <climits>
+#include <cassert>
 
 using namespace std;
 
@@ -39,7 +40,14 @@ int getMinCost(vector<vector<int>> costs, int n, int k) {
     return getMinExceptJth(dp, k, -1);
 }
 
+void Test() {
+    assert(getMinCost({{1, 2, 4, 2}, {1, 8, 1, 2}, {2, 3, 7, 8}, {2, 4, 5, 6}}, 4, 4) == 7);
+    assert(getMinCost({{1, 2, 3}, {1, 1, 2}}, 2, 3) == 2);
+}
+
 int main() {
+    Test();
+
     int n, k;
     cin >> n >> k;
 
