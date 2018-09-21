@@ -57,7 +57,7 @@ int mergeSortHelper(vector<int> & arr, vector<int> & tmp, int left, int right) {
 int mergeSort(vector<int> & arr, int n) {
   vector<int> tmp(n);
 
-  return mergeSortHelper(arr, tmp, 0, n - 1); 
+  return mergeSortHelper(arr, tmp, 0, n - 1);
 }
 
 void read(vector<int> & arr, int n) {
