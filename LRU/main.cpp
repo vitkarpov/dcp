@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unordered_map>
-#include <deque>
+#include <list>
 #include <cassert>
 
 using namespace std;
@@ -16,13 +16,20 @@ class LRU {
 public:
     LRU(int n) : capacity(n) {};
 
-    void set(int key, int val) {
+    void set(int key, int value) {
         if (storage.find(key) != storage.end()) {
-            storage[key]->value = val;
+            queue.erase(storage[key]);
+            queue.push_front(*storage[key]);
+            queue.front()->value = value;
         } else {
-            storage[key] = new Node(key, val);
+            Node * node = new Node(key, value);
+            queue.push_front(node);
+            storage[key] = queue.begin();
         }
-        touch(key);
+        if (queue.size() > capacity) {
+            storage.erase(queue.back()->key);
+            queue.pop_back();
+        }
     }
 
     int get(int key) {
@@ -30,26 +37,15 @@ public:
             return -1;
         }
 
-        int val = storage[key]->value;
-        touch(key);
+        queue.erase(storage[key]);
+        queue.push_front(*storage[key]);
 
-        return val;
+        return queue.front()->value;
     }
 private:
     int capacity;
-    deque<Node *> queue;
-    unordered_map<int, Node *> storage;
-
-    void touch(int key) {
-        // move last recent used node to the front
-        queue.push_front(storage[key]);
-
-        // maintain the capacity by removing least recent used element
-        if (storage.size() > capacity) {
-            storage.erase(queue.back()->key);
-            queue.pop_back();
-        }
-    }
+    list<Node *> queue;
+    unordered_map<int, decltype(queue.begin())> storage;
 };
 
 int main() {
