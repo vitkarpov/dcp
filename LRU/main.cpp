@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <deque>
+#include <cassert>
 
 using namespace std;
 
@@ -56,24 +57,19 @@ int main() {
 
     cache.set(2, 2);
 
-    // 2, it's what we've just set for key=2
-    cout << cache.get(2) << endl;
-    // -1, there's no such node yet
-    cout << cache.get(1) << endl;
+    assert(cache.get(2) == 2);
+    assert(cache.get(1) == -1);
 
     cache.set(1, 1);
     cache.set(1, 5);
 
-    // 5, it's last element has been set for key=1
-    cout << cache.get(1) << endl;
-    // 2, nothing's changed for key=2
-    cout << cache.get(2) << endl;
+    assert(cache.get(1) == 5);
+    assert(cache.get(2) == 2);
 
     cache.set(8, 8);
 
-    // -1, key=2 is no longer available because of it was least recent used
-    cout << cache.get(2) << endl;
-    // 8, as expected
-    cout << cache.get(8) << endl;
+    assert(cache.get(1) == -1);
+    assert(cache.get(2) == 2);
+    assert(cache.get(8) == 8);
 
 }
