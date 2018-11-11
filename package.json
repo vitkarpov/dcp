@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/vitkarpov/dcp#readme",
   "devDependencies": {
-    "jest": "^23.4.1"
+    "jest": "23.6.0"
   }
 }
