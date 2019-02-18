@@ -1,7 +1,7 @@
-# Array Partition
+# Daily Coding Problems
 
-Given an array of strictly the characters `'R'`, `'G'`, and `'B'`, segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
+https://www.dailycodingproblem.com/?ref=vitkarpov
 
-Do this in linear time and in-place.
+## DISCLAIMER
 
-For example, given the array `['G', 'B', 'R', 'R', 'B', 'R', 'G']`, it should become `['R', 'R', 'R', 'G', 'G', 'B', 'B']`.
+I do NOT disclose solutions that guys from dailycodingproblem.com send to the mailing list. All the solutions are mine. Feel free to send a pull request or file an issue if you believe something's wrong, e.g. you found a corner case.
