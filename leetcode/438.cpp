@@ -9,32 +9,34 @@ class Solution {
  public:
   vector<int> findAnagrams(const string& s, const string& p) {
     vector<int> result;
-    vector<int> window(256, 0);
+    vector<int> window(26, 0);
+    vector<int> ref(26, 0);
     int lenS = s.size();
     int lenP = p.size();
 
-    for (int i = 0; i <= lenS; i++) {
-      if (i >= lenP) {
-        for (int j = 0; j < lenP; j++) {
-          window[p[j]]--;
+    if (lenP > lenS) {
+      return {};
+    }
+
+    for (int i = 0; i < lenP; i++) {
+      ref[p[i] - 'a']++;
+      window[s[i] - 'a']++;
+    }
+
+    for (int i = 0; i <= lenS - lenP; i++) {
+      bool isAnagram = true;
+      for (int j = 0; j < lenP; j++) {
+        if (window[p[j] - 'a'] != ref[p[j] - 'a']) {
+          isAnagram = false;
+          break;
         }
-        bool isAnagram = true;
-        for (int j = 0; j < lenP; j++) {
-          if (window[p[j]] != 0) {
-            isAnagram = false;
-            break;
-          }
-        }
-        if (isAnagram) {
-          result.push_back(i - lenP);
-        }
-        for (int j = 0; j < lenP; j++) {
-          window[p[j]]++;
-        }
-        window[s[i - lenP]]--;
       }
-      if (i < lenS) {
-        window[s[i]]++;
+      if (isAnagram) {
+        result.push_back(i);
+      }
+      window[s[i] - 'a']--;
+      if (i + lenP < lenS) {
+        window[s[i + lenP] - 'a']++;
       }
     }
     return result;
