@@ -24,14 +24,7 @@ class Solution {
     }
 
     for (int i = 0; i <= lenS - lenP; i++) {
-      bool isAnagram = true;
-      for (int j = 0; j < lenP; j++) {
-        if (window[p[j] - 'a'] != ref[p[j] - 'a']) {
-          isAnagram = false;
-          break;
-        }
-      }
-      if (isAnagram) {
+      if (window == ref) {
         result.push_back(i);
       }
       window[s[i] - 'a']--;
