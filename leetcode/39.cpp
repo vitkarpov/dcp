@@ -7,10 +7,6 @@ class Solution {
   void dfs(const vector<int>& candidates, int start, int target,
            vector<int>& path, vector<vector<int>>& result) {
     for (int i = start; i < candidates.size(); i++) {
-      if (path.size() > 0 && i < path.back()) {
-        continue;
-      }
-
       int next = target - candidates[i];
       path.push_back(i);
       if (next > 0) {
@@ -21,6 +17,9 @@ class Solution {
           values.push_back(candidates[j]);
         }
         result.push_back(values);
+      } else {
+        path.pop_back();
+        break;
       }
       path.pop_back();
     }
@@ -32,6 +31,7 @@ class Solution {
     vector<vector<int>> result;
     vector<int> path;
 
+    sort(candidates.begin(), candidates.end());
     dfs(candidates, 0, target, path, result);
 
     return result;
